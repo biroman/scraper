@@ -20,13 +20,12 @@ table {
 table::before {
   content: "";
   position: absolute;
-  top: -10px; /* Adjust as needed */
-  left: -10px; /* Adjust as needed */
-  right: -10px; /* Adjust as needed */
-  bottom: -10px; /* Adjust as needed */
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
   z-index: -1;
 
-  /* Add your desired background image and apply the blur filter to it */
   background-image: url(https://user-images.githubusercontent.com/2388823/107261098-bf287080-69f3-11eb-829c-d8884e26b758.png);
 }
 
@@ -39,15 +38,6 @@ table::before {
   height: 100%;
   z-index: -1;
   filter: blur(8px);
-}
-
-tbody {
-  font-weight: bold;
-}
-
-tbody th:first-child,
-tbody td:first-child {
-  font-weight: bold;
 }
 
 tbody th:not(:first-child),

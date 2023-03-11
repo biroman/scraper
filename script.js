@@ -23,13 +23,15 @@ fetch("https://raw.githubusercontent.com/biroman/scraper/main/player_info.txt")
       }
       tr.children[0].style.color = "white";
       tr.children[0].style.fontSize = "14px";
-      // Add these lines
+
       if (tr.children[2].textContent === " Gudfar") {
         tr.children[2].style.color = "rgb(97, 172, 255)";
       } else if (tr.children[2].textContent === " Capo Crimini") {
         tr.children[2].style.color = "rgb(162, 99, 215)";
       } else if (tr.children[2].textContent === " Capo de tutti Capi") {
         tr.children[2].style.color = "rgb(255, 165, 0, 1)";
+      } else if (tr.children[2].textContent === " Boss") {
+        tr.children[2].style.color = "#1db32e";
       }
 
       tr.addEventListener("click", (event) => {
@@ -61,25 +63,67 @@ function showMessage(event) {
   message.style.marginright = "5px";
   message.style.pointerEvents = "none";
 
-  // Add transition properties for top and left
   message.style.transitionProperty = "opacity, left, top";
   message.style.transitionDuration = "0.3s";
   message.style.transitionTimingFunction = "ease-in-out";
 
   document.body.appendChild(message);
 
-  // Set initial position off-screen
   const leftEdgeOfScreen = document.documentElement.getBoundingClientRect().left;
   message.style.left = leftEdgeOfScreen - (message.offsetWidth + rowRect.width) + "px";
   message.style.top = rowRect.top + window.scrollY + "px";
 
   message.style.left = rowRect.left - message.offsetWidth - 10 + "px";
   setTimeout(() => {
-    // Slide out to left
     const leftEdgeOfScreen = document.documentElement.getBoundingClientRect().left;
     message.style.left = leftEdgeOfScreen - (message.offsetWidth + rowRect.width) + "px";
-    setTimeout(() => {
-      document.body.removeChild(message);
-    }, 2000);
   }, 2000);
+}
+
+let sortDirection = 1;
+
+const ascendingIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14"><path fill="none" d="M0 0H24V24H0z"/><path d="M19 3l4 5h-3v12h-2V8h-3l4-5zm-5 15v2H3v-2h11zm0-7v2H3v-2h11zm-2-7v2H3V4h9z"fill="rgba(255,255,255,1)"/></svg>';
+const descendingIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14"><path fill="none" d="M0 0H24V24H0z"/><path d="M20 4v12h3l-4 5-4-5h3V4h2zm-8 14v2H3v-2h9zm2-7v2H3v-2h11zm0-7v2H3V4h11z"fill="rgba(255,255,255,1)"/></svg>';
+
+const nameTh = document.querySelector("#th > th:nth-child(1)");
+nameTh.addEventListener("click", () => {
+  sortTable(0);
+  nameTh.innerHTML = "SPILLER " + (sortDirection === -1 ? ascendingIcon : descendingIcon);
+});
+
+const statusTh = document.querySelector("#th > th:nth-child(2)");
+statusTh.addEventListener("click", () => {
+  sortTable(1);
+  statusTh.innerHTML = "STATUS " + (sortDirection === -1 ? ascendingIcon : descendingIcon);
+});
+
+const rankTh = document.querySelector("#th > th:nth-child(3)");
+rankTh.addEventListener("click", () => {
+  sortTable(2);
+  rankTh.innerHTML = "RANK " + (sortDirection === -1 ? ascendingIcon : descendingIcon);
+});
+
+const ranks = [" Ingen", " Kriminell", " Associate", " Amico", " Button", " Sgarrista", " Caporegime", " Enforcer", " Capo", " Contabile", " Capo Bastone", " Consigliere", " Boss", " Gudfar", " Capo Crimini", " Capo de tutti Capi"];
+
+function sortTable(column) {
+  const table = document.querySelector("table");
+  const rows = Array.from(table.querySelectorAll("tr")).slice(1);
+  rows.sort((a, b) => {
+    const aValue = a.cells[column].textContent;
+    const bValue = b.cells[column].textContent;
+    if (column === 2) {
+      // Sort by rank
+      return (ranks.indexOf(aValue) - ranks.indexOf(bValue)) * sortDirection;
+    } else if (column === 1) {
+      // Sort by status
+      if (aValue === "Inaktiv" && bValue === "Pålogget siste uke") return -sortDirection;
+      if (aValue === "Pålogget siste uke" && bValue === "Inaktiv") return sortDirection;
+      return aValue.localeCompare(bValue) * sortDirection;
+    } else {
+      // Sort alphabetically for other columns
+      return aValue.localeCompare(bValue) * sortDirection;
+    }
+  });
+  rows.forEach((row) => table.appendChild(row));
+  sortDirection *= -1; // Reverse the sorting direction for the next click
 }
