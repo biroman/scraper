@@ -17,6 +17,26 @@ table {
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f121;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ffffff83;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff34;
+}
+
 table::before {
   content: "";
   position: absolute;
@@ -25,8 +45,6 @@ table::before {
   right: -10px;
   bottom: -10px;
   z-index: -1;
-
-  background-image: url(https://user-images.githubusercontent.com/2388823/107261098-bf287080-69f3-11eb-829c-d8884e26b758.png);
 }
 
 .message::before {
@@ -38,6 +56,19 @@ table::before {
   height: 100%;
   z-index: -1;
   filter: blur(8px);
+}
+
+tbody {
+  display: block;
+  max-height: 600px; /* Adjust this value as needed */
+  overflow-y: auto;
+}
+
+thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
 }
 
 tbody th:not(:first-child),

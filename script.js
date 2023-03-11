@@ -106,8 +106,8 @@ rankTh.addEventListener("click", () => {
 const ranks = [" Ingen", " Kriminell", " Associate", " Amico", " Button", " Sgarrista", " Caporegime", " Enforcer", " Capo", " Contabile", " Capo Bastone", " Consigliere", " Boss", " Gudfar", " Capo Crimini", " Capo de tutti Capi"];
 
 function sortTable(column) {
-  const table = document.querySelector("table");
-  const rows = Array.from(table.querySelectorAll("tr")).slice(1);
+  const table = document.querySelector("#user-table > tbody");
+  const rows = Array.from(table.querySelectorAll("tr")).slice(0);
   rows.sort((a, b) => {
     const aValue = a.cells[column].textContent;
     const bValue = b.cells[column].textContent;
