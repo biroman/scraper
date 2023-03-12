@@ -52,6 +52,7 @@ fetch("https://raw.githubusercontent.com/biroman/scraper/main/player_info.txt")
         document.querySelector("#user-table").appendChild(div);
       });
   });
+
 function showMessage(event) {
   const existingMessage = document.querySelector(".message");
   if (existingMessage) {
@@ -136,3 +137,26 @@ function sortTable(column) {
   rows.forEach((row) => table.appendChild(row));
   sortDirection *= -1;
 }
+
+var input = document.querySelector("body > div > div > input");
+
+input.addEventListener("keyup", function () {
+  var filter = input.value.toUpperCase();
+
+  var tableBody = document.querySelector("#user-table > tbody");
+
+  var rows = tableBody.getElementsByTagName("tr");
+
+  for (var i = 0; i < rows.length; i++) {
+    var row = rows[i];
+    var name = row.getElementsByTagName("td")[0];
+    if (name) {
+      var text = name.textContent || name.innerText;
+      if (text.toUpperCase().indexOf(filter) > -1) {
+        row.style.display = "";
+      } else {
+        row.style.display = "none";
+      }
+    }
+  }
+});

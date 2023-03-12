@@ -5,38 +5,28 @@ body {
   color: #888888;
   font-family: "Montserrat Alternates", sans-serif;
 }
-
 table {
   border-collapse: separate;
   border-spacing: 0;
-  margin: auto;
   width: 50%;
   border-radius: 15px;
   overflow: hidden;
   position: relative;
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
-
 ::-webkit-scrollbar {
   width: 10px;
 }
-
-/* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f121;
 }
-
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #ffffff83;
   border-radius: 10px;
 }
-
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #ffffff34;
 }
-
 table::before {
   content: "";
   position: absolute;
@@ -46,7 +36,6 @@ table::before {
   bottom: -10px;
   z-index: -1;
 }
-
 .message::before {
   content: "";
   position: absolute;
@@ -57,59 +46,49 @@ table::before {
   z-index: -1;
   filter: blur(8px);
 }
-
 tbody {
   display: block;
-  max-height: 600px; /* Adjust this value as needed */
+  max-height: 600px;
   overflow-y: auto;
 }
-
 thead,
 tbody tr {
   display: table;
   width: 100%;
   table-layout: fixed;
 }
-
 tbody th:not(:first-child),
 tbody td:not(:first-child) {
   font-weight: normal;
 }
-
 th,
 td {
   padding: 15px;
   text-align: left;
 }
-
 th {
   color: #fff;
   border: none;
   font-size: 0.8em;
 }
-
 tr {
   background-color: rgba(255, 255, 255, 0.1);
   user-select: none;
 }
-
 #th:hover {
   background-color: rgba(255, 255, 255, 0.1);
   cursor: default;
   user-select: none;
 }
-
 tr:hover {
   color: rgb(255, 255, 255, 1);
   background-color: rgba(255, 255, 255, 0.137);
   cursor: pointer;
 }
-
 .user-table td:first-child {
   display: flex;
   align-items: center;
 }
-
 .user-table td:first-child img {
   border-radius: 50%;
   width: 30px;
@@ -117,18 +96,48 @@ tr:hover {
   object-fit: cover;
   margin-right: 10px;
 }
-
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   height: 98vh;
 }
-
 .updated {
   position: fixed;
   opacity: 0.5;
   font-size: 15px;
   padding-top: 5px;
   padding-left: 14px;
+}
+
+.search input {
+  width: 100%;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.13);
+  border-radius: 10px;
+  border: none;
+  backdrop-filter: blur(10px);
+  outline: none;
+  font-size: 24px;
+  color: white;
+  padding-left: 10px;
+  font-weight: bolder;
+}
+
+input {
+  caret-color: rgb(255, 255, 255);
+}
+
+::placeholder {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.349);
+}
+
+.search {
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  padding-bottom: 20px;
 }
