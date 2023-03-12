@@ -160,3 +160,11 @@ input.addEventListener("keyup", function () {
     }
   }
 });
+
+const inputd = document.querySelector("body > div > div > input");
+input.addEventListener("click", function () {
+  this.placeholder = "";
+});
+input.addEventListener("blur", function () {
+  this.placeholder = "Søk...";
+});

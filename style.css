@@ -49,6 +49,7 @@ table::before {
 tbody {
   display: block;
   max-height: 600px;
+  min-height: 600px;
   overflow-y: auto;
 }
 thead,
@@ -121,7 +122,7 @@ tr:hover {
   outline: none;
   font-size: 24px;
   color: white;
-  padding-left: 10px;
+  padding-left: 36px;
   font-weight: bolder;
 }
 
@@ -140,4 +141,11 @@ input {
   justify-content: center;
   width: 50%;
   padding-bottom: 20px;
+}
+
+.search input[type="text"] {
+  padding-left: 46px; /* add some left padding to make room for the SVG */
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224%22%20height%3D%2224%22%3E%3Cpath%20fill%3D%22none%22%20d%3D%22M0%200h24v24H0z%22%2F%3E%3Cpath%20d%3D%22M11%202c4.968%200%209%204.032%209%209s-4.032%209-9%209-9-4.032-9-9%204.032-9%209-9zm0%2016c3.867%200%207-3.133%207-7%200-3.868-3.133-7-7-7-3.868%200-7%203.132-7%207%200%203.867%203.132%207%207%207zm8.485.071l2.829%202.828-1.415%201.415-2.828-2.829%201.414-1.414z%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.349%29%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: 12px center;
 }
