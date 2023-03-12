@@ -124,3 +124,11 @@ tr:hover {
   align-items: center;
   height: 98vh;
 }
+
+.updated {
+  position: fixed;
+  opacity: 0.5;
+  font-size: 15px;
+  padding-top: 5px;
+  padding-left: 14px;
+}

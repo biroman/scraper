@@ -39,6 +39,18 @@ fetch("https://raw.githubusercontent.com/biroman/scraper/main/player_info.txt")
         showMessage(event);
       });
     });
+    fetch("https://api.github.com/repos/biroman/scraper/commits?path=player_info.txt")
+      .then((response) => response.json())
+      .then((data) => {
+        const lastModified = new Date(data[0].commit.committer.date);
+        const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+        const lastModifiedDate = lastModified.toLocaleDateString("nb-NO", options);
+        const lastModifiedTime = `${lastModified.getHours()}:${lastModified.getMinutes().toString().padStart(2, "0")}:${lastModified.getSeconds().toString().padStart(2, "0")}`;
+        const div = document.createElement("div");
+        div.classList.add("updated");
+        div.innerText = `Sist oppdatert: ${lastModifiedDate} ${lastModifiedTime}`;
+        document.querySelector("#user-table").appendChild(div);
+      });
   });
 function showMessage(event) {
   const existingMessage = document.querySelector(".message");
@@ -112,18 +124,15 @@ function sortTable(column) {
     const aValue = a.cells[column].textContent;
     const bValue = b.cells[column].textContent;
     if (column === 2) {
-      // Sort by rank
       return (ranks.indexOf(aValue) - ranks.indexOf(bValue)) * sortDirection;
     } else if (column === 1) {
-      // Sort by status
       if (aValue === "Inaktiv" && bValue === "Pålogget siste uke") return -sortDirection;
       if (aValue === "Pålogget siste uke" && bValue === "Inaktiv") return sortDirection;
       return aValue.localeCompare(bValue) * sortDirection;
     } else {
-      // Sort alphabetically for other columns
       return aValue.localeCompare(bValue) * sortDirection;
     }
   });
   rows.forEach((row) => table.appendChild(row));
-  sortDirection *= -1; // Reverse the sorting direction for the next click
+  sortDirection *= -1;
 }
