@@ -1,3 +1,5 @@
+let userCount = 0;
+
 fetch("https://raw.githubusercontent.com/biroman/scraper/main/player_info.txt")
   .then((response) => response.text())
   .then((data) => {
@@ -19,6 +21,7 @@ fetch("https://raw.githubusercontent.com/biroman/scraper/main/player_info.txt")
       //   <td>${row[7]}</td>
 
       if (row[0] !== "") {
+        userCount++;
         table.querySelector("tbody").appendChild(tr);
       }
       tr.children[0].style.color = "white";
@@ -48,7 +51,7 @@ fetch("https://raw.githubusercontent.com/biroman/scraper/main/player_info.txt")
         const lastModifiedTime = `${lastModified.getHours()}:${lastModified.getMinutes().toString().padStart(2, "0")}:${lastModified.getSeconds().toString().padStart(2, "0")}`;
         const div = document.createElement("div");
         div.classList.add("updated");
-        div.innerText = `Sist oppdatert: ${lastModifiedDate} ${lastModifiedTime}`;
+        div.innerText = `${lastModifiedDate} ${lastModifiedTime}`;
         document.querySelector("#user-table").appendChild(div);
       });
   });
@@ -162,9 +165,14 @@ input.addEventListener("keyup", function () {
 });
 
 const inputd = document.querySelector("body > div > div > input");
+
+setTimeout(() => {
+  inputd.placeholder = `Søk igjennom ${userCount} spillere...`;
+}, 100);
+
 input.addEventListener("click", function () {
   this.placeholder = "";
 });
 input.addEventListener("blur", function () {
-  this.placeholder = "Søk...";
+  this.placeholder = `Søk igjennom ${userCount} spillere...`;
 });
