@@ -167,12 +167,25 @@ input.addEventListener("keyup", function () {
 const inputd = document.querySelector("body > div > div > input");
 
 setTimeout(() => {
-  inputd.placeholder = `Søk igjennom ${userCount} spillere...`;
-}, 100);
-
-input.addEventListener("click", function () {
+  typeWriter(`Søk igjennom ${userCount} spillere...`, null);
+}, 550);
+inputd.addEventListener("click", function () {
   this.placeholder = "";
 });
-input.addEventListener("blur", function () {
-  this.placeholder = `Søk igjennom ${userCount} spillere...`;
+inputd.addEventListener("blur", function () {
+  this.placeholder = "";
+  typeWriter(`Søk igjennom ${userCount} spillere...`, null);
 });
+
+function typeWriter(text, callback) {
+  let index = 0;
+  const interval = setInterval(() => {
+    if (index < text.length) {
+      inputd.placeholder += text.charAt(index);
+      index++;
+    } else {
+      clearInterval(interval);
+      if (callback) callback();
+    }
+  }, 100); // 100ms delay between characters
+}
