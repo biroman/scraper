@@ -1,4 +1,1 @@
-Pkey, https://mafiaspillet.no/bilde.jpg, Ingen, Inaktiv
-kramer, https://mafiaspillet.no/bilde.jpg, Button, Inaktiv
-Myggen, https://mafiaspillet.no/bilde.jpg, Ingen, Pålogget siste uke
-Kaul, https://mafiaspillet.no/bilde.jpg, Amico, Pålogget siste uke
+Gabbimevi, https://mafiaspillet.no/bilde.jpg, Ingen, Inaktiv
