@@ -42,6 +42,7 @@ fetch("https://raw.githubusercontent.com/biroman/scraper/main/player_info.txt")
         showMessage(event);
       });
     });
+    sortTable(2);
     fetch("https://api.github.com/repos/biroman/scraper/commits?path=player_info.txt")
       .then((response) => response.json())
       .then((data) => {
