@@ -141,6 +141,8 @@ function sortTable(column) {
   sortDirection *= -1;
 }
 
+sortTable(2);
+
 var input = document.querySelector("body > div > div > input");
 
 input.addEventListener("keyup", function () {
