@@ -14,8 +14,8 @@ fetch("https://raw.githubusercontent.com/biroman/scraper/main/player_info.txt")
         <td><img src="${row[1]}" alt="${row[0]}'s Profile Picture">${row[0]}</td>
         <td>${row[3]}</td>
         <td>${row[2]}</td>
+        <td></td>
       `;
-      //   <td>${row[4]}</td>
       //   <td>${row[5]}</td>
       //   <td>${row[6]}</td>
       //   <td>${row[7]}</td>
@@ -37,12 +37,71 @@ fetch("https://raw.githubusercontent.com/biroman/scraper/main/player_info.txt")
         tr.children[2].style.color = "#1db32e";
       }
 
-      tr.addEventListener("click", (event) => {
-        navigator.clipboard.writeText(row[0]);
+      tr.children[0].addEventListener("click", (event) => {
+        navigator.clipboard.writeText(event.target.textContent);
         showMessage(event);
       });
     });
     sortTable(2);
+
+    const tableBody = document.querySelector("#user-table > tbody");
+    const rowss = tableBody.getElementsByTagName("tr");
+
+    // Get all names from the table
+    const namesInTable = [];
+    for (let i = 0; i < rowss.length; i++) {
+      const row = rowss[i];
+      const nameCell = row.getElementsByTagName("td")[0];
+      const name = nameCell.textContent;
+      namesInTable.push(name);
+    }
+
+    // Check for names in local storage that are not in the table
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (!namesInTable.includes(key)) {
+        // Name is not in the table, remove it from local storage
+        localStorage.removeItem(key);
+      }
+    }
+
+    for (let i = 0; i < rowss.length; i++) {
+      const row = rowss[i];
+      const nameCell = row.getElementsByTagName("td")[0];
+      const name = nameCell.textContent;
+      const newCell = row.getElementsByTagName("td")[3]; // Change index to match new column
+
+      // Retrieve stored value from local storage
+      const storedValue = localStorage.getItem(name);
+      if (storedValue) {
+        // Display stored value inside new cell
+        newCell.textContent = storedValue;
+      }
+
+      // Make new cell editable when clicked
+      newCell.setAttribute("contenteditable", true);
+
+      // Remove the outline when the new cell is focused
+      newCell.style.outline = "none";
+
+      // Intercept paste event and only insert plain text
+      newCell.addEventListener("paste", (event) => {
+        // Prevent default paste behavior
+        event.preventDefault();
+
+        // Get text representation of clipboard data
+        const text = event.clipboardData.getData("text/plain");
+
+        // Insert text at cursor position
+        document.execCommand("insertText", false, text);
+      });
+
+      // Save changes to local storage when user finishes editing
+      newCell.addEventListener("blur", () => {
+        localStorage.setItem(name, newCell.textContent);
+      });
+    }
+
     fetch("https://api.github.com/repos/biroman/scraper/commits?path=player_info.txt")
       .then((response) => response.json())
       .then((data) => {
@@ -97,7 +156,7 @@ function showMessage(event) {
   }, 2000);
 }
 
-let sortDirection = 1;
+let sortDirection = -1;
 
 const ascendingIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14"><path fill="none" d="M0 0H24V24H0z"/><path d="M19 3l4 5h-3v12h-2V8h-3l4-5zm-5 15v2H3v-2h11zm0-7v2H3v-2h11zm-2-7v2H3V4h9z"fill="rgba(255,255,255,1)"/></svg>';
 const descendingIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14"><path fill="none" d="M0 0H24V24H0z"/><path d="M20 4v12h3l-4 5-4-5h3V4h2zm-8 14v2H3v-2h9zm2-7v2H3v-2h11zm0-7v2H3V4h11z"fill="rgba(255,255,255,1)"/></svg>';
@@ -141,8 +200,6 @@ function sortTable(column) {
   rows.forEach((row) => table.appendChild(row));
   sortDirection *= -1;
 }
-
-sortTable(2);
 
 var input = document.querySelector("body > div > div > input");
 
