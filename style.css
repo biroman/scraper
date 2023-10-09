@@ -1,10 +1,13 @@
 body {
-  background-image: url(https://user-images.githubusercontent.com/2388823/107261098-bf287080-69f3-11eb-829c-d8884e26b758.png);
+  background: linear-gradient(to top left, #481638 5%, #04043d 75%);
   background-color: black;
-  background-size: auto;
   color: #888888;
   font-family: "Montserrat Alternates", sans-serif;
+  background-size: auto;
+  min-height: 99.5vh;
+  overflow: hidden;
 }
+
 table {
   border-collapse: separate;
   border-spacing: 0;
