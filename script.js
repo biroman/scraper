@@ -1,4 +1,5 @@
 let userCount = 0;
+let intervalId = null;
 
 fetch("player_info.txt")
   .then((response) => response.text())
@@ -235,9 +236,16 @@ const inputd = document.querySelector("body > div > div > input");
 setTimeout(() => {
   typeWriter(`Søk igjennom ${userCount} spillere...`, null);
 }, 550);
+
 inputd.addEventListener("click", function () {
+  // Clear the interval when the input field is focused
+  if (intervalId) {
+    clearInterval(intervalId);
+    intervalId = null;
+  }
   this.placeholder = "";
 });
+
 inputd.addEventListener("blur", function () {
   this.placeholder = "";
   typeWriter(`Søk igjennom ${userCount} spillere...`, null);
@@ -245,12 +253,20 @@ inputd.addEventListener("blur", function () {
 
 function typeWriter(text, callback) {
   let index = 0;
-  const interval = setInterval(() => {
+  inputd.placeholder = ""; // Clear the placeholder before starting the animation
+
+  // Clear the previous interval before starting a new one
+  if (intervalId) {
+    clearInterval(intervalId);
+  }
+
+  intervalId = setInterval(() => {
     if (index < text.length) {
       inputd.placeholder += text.charAt(index);
       index++;
     } else {
-      clearInterval(interval);
+      clearInterval(intervalId);
+      intervalId = null; // Reset the interval ID when the animation is done
       if (callback) callback();
     }
   }, 100); // 100ms delay between characters
